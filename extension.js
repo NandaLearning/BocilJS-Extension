@@ -6,7 +6,7 @@ function activate(context) {
     console.log('Congratulations, your extension "letscode" is now active!');
 
     let disposable = vscode.commands.registerCommand('letscode.chooseOption', function () {
-        vscode.window.showQuickPick(['ReactJs', 'ExpressJs', 'ExpressTs']).then(option => {
+        vscode.window.showQuickPick(['React Js', 'Express Js', 'ExpressTs']).then(option => {
             if (option) {
                 createTemplate(option, context.extensionPath);
             }
