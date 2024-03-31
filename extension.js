@@ -1,36 +1,67 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
+const fs = require('fs');
+const path = require('path');
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
-
-/**
- * @param {vscode.ExtensionContext} context
- */
 function activate(context) {
+    console.log('Congratulations, your extension "letscode" is now active!');
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "letscode" is now active!');
+    let disposable = vscode.commands.registerCommand('letscode.chooseOption', function () {
+        vscode.window.showQuickPick(['ReactJs', 'ExpressJs', 'ExpressTs']).then(option => {
+            if (option) {
+                createTemplate(option, context.extensionPath);
+            }
+        });
+    });
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with  registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('letscode.helloWorld', function () {
-		// The code you place here will be executed every time your command is executed
-
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from Letscode!');
-	});
-
-	context.subscriptions.push(disposable);
+    context.subscriptions.push(disposable);
 }
 
-// This method is called when your extension is deactivated
+function createTemplate(option, extensionPath) {
+    const workspaceFolder = vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0].uri.fsPath : undefined;
+
+    if (!workspaceFolder) {
+        vscode.window.showErrorMessage('No workspace folder found.');
+        return;
+    }
+
+    const templatePath = path.join(extensionPath, option);
+
+    if (!fs.existsSync(templatePath)) {
+        vscode.window.showErrorMessage(`Template folder "${option}" not found.`);
+        return;
+    }
+
+    copyTemplate(templatePath, workspaceFolder);
+}
+
+function copyTemplate(source, destination) {
+    // Membuat folder tujuan jika belum ada
+    if (!fs.existsSync(destination)) {
+        fs.mkdirSync(destination);
+    }
+
+    // Membaca isi folder sumber
+    const files = fs.readdirSync(source);
+
+    files.forEach(file => {
+        const sourcePath = path.join(source, file);
+        const destPath = path.join(destination, file);
+
+        if (fs.lstatSync(sourcePath).isDirectory()) {
+            // Jika itu adalah folder, salin rekursif
+            copyTemplate(sourcePath, destPath);
+        } else {
+            // Jika itu adalah file, salin
+            fs.copyFileSync(sourcePath, destPath);
+        }
+    });
+
+    vscode.window.showInformationMessage('Template copied successfully!');
+}
+
 function deactivate() {}
 
 module.exports = {
-	activate,
-	deactivate
-}
+    activate,
+    deactivate
+};

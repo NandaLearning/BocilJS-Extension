@@ -6,6 +6,7 @@
   "engines": {
     "vscode": "^1.87.0"
   },
+  "icon": "img/letscode.PNG",
   "categories": [
     "Other"
   ],
@@ -13,8 +14,8 @@
   "main": "./extension.js",
   "contributes": {
     "commands": [{
-      "command": "letscode.helloWorld",
-      "title": "Hello World"
+      "command": "letscode.chooseOption",
+      "title": "letscode"
     }]
   },
   "scripts": {
