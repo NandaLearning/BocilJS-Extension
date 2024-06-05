@@ -9,6 +9,7 @@ Jika ingin memodifikasi nya saya izin kan karena saya berniat menjadikan extensi
 
 
 
+
 ## Installation
 
 Step By Step Penggunaan nya
@@ -25,7 +26,16 @@ Step By Step Penggunaan nya
  5. Pilih Bocil Js
 
  6. lalu pilih framework yang ingin di gunakan
+
+ 7. Ketik npm install/npm i
+
+ 8. jalankan project 
+
+ - React js      : npm run dev
+
+ - express js/ts : npm start
 ```
+    
 
 
 ## Vscode Marketplace
