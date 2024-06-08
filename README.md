@@ -19,7 +19,7 @@ Step By Step Penggunaan nya
 
  2. cari Bocil js
 
- 3. lalu siapkan folder kosong
+ 3. lalu siapkan folder kosong(masuk ke vscode) 
 
  4. tekan CTRL + SIFT + P
 
